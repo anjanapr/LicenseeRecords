@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Save Licensee Account";
+}
+
+@model LicenseeRecords.Web.ViewModels.ProductLicenceViewModel
+
+<form asp-action="UpdateAccount" method="post">
+    <input type="hidden" name="AccountId" value="@Model.AccountId" />
+    <input type="hidden" name="AccountName" value="@Model.AccountName" />
+    <input type="hidden" name="AccountStatus" value="@Model.AccountStatus" />
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+                Enter the Product Licence Details
+            </h1>
+        </legend>
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="product-name">
+                Product Name
+            </label>
+            <select class="govuk-select" id="product-name" name="ProductLicence.Product.ProductId">
+                <option value="choose" selected>Choose Product</option>
+                @foreach (var product in Model.Products)
+                {
+                    <option value="@product.ProductId">@product.ProductName</option>
+                }
+            </select>
+        </div>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label">Status</label>
+            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+
+                @foreach (var status in Enum.GetValues(typeof(Status)))
+                {
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" type="radio" id="licence-status-@status"
+                            name="ProductLicence.LicenceStatus" value="@status" />
+                        <label class="govuk-label govuk-radios__label" for="licence-status-@status">@status</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label">Licence Start Date</label>
+
+            <fieldset class="govuk-fieldset" role="group">
+                <div class="govuk-date-input" id="licence-from">
+                    @{
+                        ViewData["Label"] = "Day";
+                    }
+                    @Html.Partial("_DateInputs", "StartDay")
+                    @{
+                        ViewData["Label"] = "Month";
+                    }
+                    @Html.Partial("_DateInputs", "StartMonth")
+                    @{
+                        ViewData["Label"] = "Year";
+                    }
+                    @Html.Partial("_DateInputs", "StartYear")
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <label class="govuk-label">
+                Licence End Date
+            </label>
+
+            <fieldset class="govuk-fieldset" role="group">
+                <div class="govuk-date-input" id="licence-to">
+
+                    @{
+                        ViewData["Label"] = "Day";
+                    }
+                    @Html.Partial("_DateInputs", "EndDay")
+                    @{
+                        ViewData["Label"] = "Month";
+                    }
+                    @Html.Partial("_DateInputs", "EndMonth")
+                    @{
+                        ViewData["Label"] = "Year";
+                    }
+                    @Html.Partial("_DateInputs", "EndYear")
+                </div>
+            </fieldset>
+        </div>
+    </fieldset>
+    <div class="govuk-form-group">
+        <button class="govuk-button" id="submit-button" type="submit">Submit </button>
+    </div>
+</form>

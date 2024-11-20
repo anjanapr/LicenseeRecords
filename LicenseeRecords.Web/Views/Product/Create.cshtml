@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="product-name">
+        Enter the Product Name
+    </label>
+</h1>
+
+<form method="post" asp-action="Create">
+    <div class="govuk-form-group">
+        <input class="govuk-input" id="product-name" name="ProductName" type="text" aria-describedby="product-name"
+            required>
+    </div>
+
+    <div class="govuk-form-group govuk-button-group">
+        <button class="govuk-button" id="submit-button" type="submit">Save Product</button>
+        <a class="govuk-link" asp-action="Index">Cancel</a>
+    </div>
+</form>

@@ -1,0 +1,14 @@
+@model string
+@{
+    var label = ViewData["Label"] as string;
+}
+
+<div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+        <label class="govuk-label govuk-date-input__label" for="@Model">
+            @label
+        </label>
+        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="@Model" name="@Model" type="text"
+            inputmode="numeric">
+    </div>
+</div>

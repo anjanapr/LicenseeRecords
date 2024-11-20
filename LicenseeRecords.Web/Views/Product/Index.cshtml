@@ -1,0 +1,38 @@
+@{
+  ViewData["Title"] = "Products";
+}
+
+@model List<Product>
+
+<a href="@Url.Action("Create")" class="govuk-button govuk-button--primary" role="button">
+  Add New Product
+</a>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--l">Products</caption>
+
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+
+    @foreach (var product in Model)
+    {
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">@product.ProductName</td>
+        <td class="govuk-table__cell">
+
+          <a asp-action="Update" asp-route-productId="@product.ProductId" class="govuk-link">Edit</a> |
+          <a asp-action="Delete" asp-route-productId="@product.ProductId"
+            class="govuk-link govuk-link--destructive">Delete</a>
+
+        </td>
+      </tr>
+    }
+
+  </tbody>
+</table>

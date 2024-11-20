@@ -1,0 +1,122 @@
+@{
+    ViewData["Title"] = "Delete Licence Product";
+}
+
+@model LicenseeRecords.Web.ViewModels.ProductLicenceViewModel
+
+<form asp-action="DeleteProductLicence" asp-route-accountId="@Model.AccountId"
+    asp-route-licenceId="@Model.ProductLicence.LicenceId" method="post">
+    <input type="hidden" name="AccountId" value="@Model.AccountId" />
+    <input type="hidden" name="ProductLicence.LicenceId" value="@Model.ProductLicence.LicenceId" />
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+                Delete the Product Licence
+            </h1>
+        </legend>
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="product-name">
+                Product Name
+            </label>
+            <input class="govuk-input" id="product-name" name="ProductLicence.Product.ProductId" type="text"
+                aria-describedby="product-name" required value="@Model.ProductLicence.Product.ProductName">
+        </div>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label">Status</label>
+            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                @foreach (var status in Enum.GetValues(typeof(Status)))
+                {
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" type="radio" id="licence-status-@status"
+                            name="ProductLicence.LicenceStatus" value="@Model.ProductLicence.LicenceStatus"
+                        @(Model.ProductLicence.LicenceStatus == Model.ProductLicence.LicenceStatus ? "selected" : "") />
+                        <label class="govuk-label govuk-radios__label" for="licence-status-@status">@status</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label">Licence Start Date</label>
+
+            <fieldset class="govuk-fieldset" role="group">
+                <div class="govuk-date-input" id="licence-from">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="licence-start-day">
+                                Day
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                id="licence-start-day" name="ProductLicence.LicenceFromDate.Day" type="text"
+                                inputmode="numeric" value="@Model.ProductLicence.LicenceFromDate?.Day">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="licence-start-month">
+                                Month
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                id="licence-start-month" name="ProductLicence.LicenceFromDate.Month" type="text"
+                                inputmode="numeric" value="@Model.ProductLicence.LicenceFromDate?.Month">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="licence-start-year">
+                                Year
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                id="licence-start-year" name="ProductLicence.LicenceFromDate.Year" type="text"
+                                inputmode="numeric" value="@Model.ProductLicence.LicenceFromDate?.Year">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <label class="govuk-label">
+                Licence End Date
+            </label>
+
+            <fieldset class="govuk-fieldset" role="group">
+                <div class="govuk-date-input" id="licence-to">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="licence-to-day">
+                                Day
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="licence-to-day"
+                                name="licence-to-day" type="text" inputmode="numeric"
+                                value="@Model.ProductLicence.LicenceToDate?.Day">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="licence-to-month">
+                                Month
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                id="licence-to-month" name="licence-to-month" type="text" inputmode="numeric"
+                                value="@Model.ProductLicence.LicenceToDate?.Month">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="licence-to-year">
+                                Year
+                            </label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="licence-to-year"
+                                name="licence-to-year" type="text" inputmode="numeric"
+                                value="@Model.ProductLicence.LicenceToDate?.Year">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </fieldset>
+    <div class="govuk-form-group">
+        <button class="govuk-button" id="submit-button" type="submit">Delete Product Licence</button>
+    </div>
+</form>

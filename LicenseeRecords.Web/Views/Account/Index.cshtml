@@ -1,0 +1,99 @@
+@{
+  ViewData["Title"] = "Licensee Accounts";
+}
+
+@model List<Account>
+
+<a href="@Url.Action("SaveAccountName")" class="govuk-button govuk-button--primary" role="button">
+  Add New Licensee Account
+</a>
+
+<h1 class="govuk-heading-l">Accounts</h1>
+
+<div class="govuk-accordion" data-module="govuk-accordion">
+  @foreach (var account in Model)
+  {
+    <div class="govuk-accordion__section">
+      <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading">
+          <span class="govuk-accordion__section-button">@account.AccountName</span>
+        </h2>
+      </div>
+      <div class="govuk-accordion__section-content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Account Name</dt>
+            <dd class="govuk-summary-list__value">@account.AccountName</dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" asp-action="SaveAccountName" asp-route-accountId="@account.AccountId">Change<span
+                  class="govuk-visually-hidden">
+                  Account Name</span></a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Account Status</dt>
+            <dd class="govuk-summary-list__value">
+              <strong class="@(account.AccountStatus == Status.Active 
+              ? "govuk-tag--green" 
+              : "govuk-tag--grey")">
+                @account.AccountStatus
+              </strong>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" asp-action="SaveAccountStatus" asp-route-accountId="@account.AccountId">Change<span
+                  class="govuk-visually-hidden">
+                  Account Status</span></a>
+            </dd>
+          </div>
+        </dl>
+        <a asp-action="SaveProductLicence" asp-route-accountId="@account.AccountId"
+          class="govuk-button govuk-button--secondary" role="button">
+          Add Product Licence
+        </a>
+        @if (account.ProductLicence?.Any() == true)
+        {
+          <section class="govuk-!-margin-bottom-6" style="border: 1px solid rgb(177, 180, 182);">
+            <span class="govuk-heading-m"
+              style="margin-bottom: 0px; background-color: rgb(243, 242, 241); line-height: 1.3rem; padding: 1rem;">
+              Product Licences</span>
+
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header" style="padding-left: 1rem;">Product Name</th>
+                  <th scope="col" class="govuk-table__header">Status</th>
+                  <th scope="col" class="govuk-table__header">From Date</th>
+                  <th scope="col" class="govuk-table__header">To Date</th>
+                  <th scope="col" class="govuk-table__header">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+
+                @foreach (var licence in account.ProductLicence)
+                {
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell" style="padding-left: 1rem;">@licence.Product?.ProductName</td>
+                    <td class="govuk-table__cell"><strong class="@(licence.LicenceStatus == Status.Active 
+                        ? "govuk-tag--green" 
+                        : "govuk-tag--grey")">@licence.LicenceStatus</strong>
+                    </td>
+                    <td class="govuk-table__cell">@licence.LicenceFromDate?.ToString("yyyy-MM-dd")</td>
+                    <td class="govuk-table__cell">@if (licence.LicenceToDate != null)
+                      {
+                        @licence.LicenceToDate?.ToString("yyyy-MM-dd")
+                      }</td>
+                    <td class="govuk-table__cell">
+                      <a asp-action="DeleteProductLicence" class="govuk-link govuk-link--destructive"
+                        asp-route-accountId="@account.AccountId" asp-route-licenceId="@licence.LicenceId">Remove</a>
+                    </td>
+                  </tr>
+                }
+
+              </tbody>
+            </table>
+          </section>
+        }
+      </div>
+    </div>
+  }
+</div>

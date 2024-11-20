@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+@model Product
+
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="product-name">
+        Delete Product
+    </label>
+</h1>
+
+<form method="post" asp-action="Delete">
+    <input type="hidden" name="ProductId" value="@Model.ProductId">
+    <div class="govuk-form-group">
+        <input class="govuk-input" id="product-name" name="ProductName" type="text" aria-describedby="product-name"
+            required value="@Model.ProductName">
+    </div>
+
+    <div class="govuk-form-group govuk-button-group">
+        <button class="govuk-button govuk-button--warning" id="submit-button" type="submit">Delete Product</button>
+        <a class="govuk-link" asp-action="Index">Cancel</a>
+    </div>
+</form>

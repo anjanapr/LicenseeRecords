@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Save Licensee Account";
+}
+
+@model Account
+
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="account-name">
+        @(Model.AccountId == 0 ? "Enter" : "Update") the Account Name
+    </label>
+</h1>
+
+<form asp-action="SaveName" method="post">
+    <input type="hidden" name="AccountId" value="@Model.AccountId" />
+
+    <div class="govuk-form-group">
+        <input class="govuk-input" id="account-name" name="AccountName" type="text" aria-describedby="account-name"
+            value="@Model.AccountName" required>
+    </div>
+
+    @if (Model.AccountId != 0)
+    {
+        <div class="govuk-form-group">
+            <button class="govuk-button" id="submit-button" type="submit">Save Account Name </button>
+        </div>
+    }
+
+    @if (Model.AccountId == 0)
+    {
+        <button class="govuk-button" id="continue-button" type="submit">Continue </button>
+    }
+</form>
